@@ -1,0 +1,46 @@
+<project default="run" basedir=".">
+	
+
+    <property file="build.properties"/>
+
+
+    <!-- 
+        DEV environment 
+    -->
+    <target name="clean">
+    	<delete dir="${dev.classes.dir}"/>
+      <delete dir="${input.dir}"/>
+    </target>
+
+
+
+    <target name="init" depends="clean">
+    	<mkdir dir="${dev.classes.dir}"/>
+    </target>
+
+
+	
+	<target name="compile" depends="init">
+        <path id="master-classpath">
+          <fileset dir="${dev.lib.dir}">
+            <include name="*.jar"/>
+          </fileset>
+        </path>
+
+        <javac srcdir="${src.dir}" destdir="${dev.classes.dir}">
+            <classpath refid="master-classpath"/>
+        </javac>
+    </target>
+
+    <target name="run" depends="compile">
+       <java classname="com.zeugor.apache_poi_excel_sample.PoiExcelFile">
+            <classpath>
+              <pathelement path="bin"/>   
+              <fileset dir="${dev.lib.dir}">
+                <include name="*.jar"/>
+              </fileset>            
+            </classpath>
+       </java>       
+    </target>
+
+</project>
